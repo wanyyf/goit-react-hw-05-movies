@@ -12,7 +12,7 @@ const Movies = () => {
     if (query) {
       filmSearchRequest(query);
     }
-  }, []);
+  }, [searchParams]);
 
   const onInputChange = evt => {
     const value = evt.target.value;

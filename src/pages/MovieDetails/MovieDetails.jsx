@@ -10,17 +10,16 @@ const MovieDetails = () => {
   const { movieId } = useParams();
 
   useEffect(() => {
+    async function FilmInfoRequest() {
+      await movieIdApi(movieId)
+        .then(data => setFilmInfo(data))
+        .catch(error => {
+          setFilmInfo([]);
+          console.log(error);
+        });
+    }
     FilmInfoRequest();
   }, [movieId]);
-
-  async function FilmInfoRequest() {
-    await movieIdApi(movieId)
-      .then(data => setFilmInfo(data))
-      .catch(error => {
-        setFilmInfo([]);
-        console.log(error);
-      });
-  }
 
   const {
     poster_path,

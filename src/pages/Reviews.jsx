@@ -7,14 +7,13 @@ const Reviews = () => {
   const { movieId } = useParams();
 
   useEffect(() => {
+    async function FilmReviewsRequest() {
+      await movieReviewsApi(movieId)
+        .then(data => setReviews(data.results))
+        .catch(error => console.log(error));
+    }
     FilmReviewsRequest();
-  }, []);
-
-  async function FilmReviewsRequest() {
-    await movieReviewsApi(movieId)
-      .then(data => setReviews(data.results))
-      .catch(error => console.log(error));
-  }
+  }, [movieId]);
 
   return (
     <ul>

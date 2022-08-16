@@ -7,14 +7,13 @@ const Cast = () => {
   const [casts, setcasts] = useState([]);
 
   useEffect(() => {
+    async function castsRequest() {
+      await movieCreditsApi(movieId)
+        .then(data => setcasts(data.cast))
+        .catch(error => console.log(error));
+    }
     castsRequest();
-  }, []);
-
-  async function castsRequest() {
-    await movieCreditsApi(movieId)
-      .then(data => setcasts(data.cast))
-      .catch(error => console.log(error));
-  }
+  }, [movieId]);
 
   return (
     <ul>
