@@ -12,3 +12,16 @@
   margin-bottom: 180px;
   margin-left: 15px;
 }
+.buttonBack {
+  display: block;
+  border: 2px solid orange;
+  width: 70px;
+  margin: 15px;
+  padding: 8px;
+  background-color: transparent;
+}
+.buttonBack:hover,
+.buttonBack:focus {
+  background-color: orange;
+  color: white;
+}

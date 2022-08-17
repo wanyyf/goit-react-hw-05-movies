@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { movieSearchsApi } from 'Api/movieApi';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import FilmList from 'components/FilmList/FilmList';
 const Movies = () => {
   const [searchInput, setSearchInput] = useState('');
   const [searchFilms, setSearchFilms] = useState([]);
@@ -37,19 +38,7 @@ const Movies = () => {
         <input type="text" value={searchInput} onChange={onInputChange} />
         <button type="submit">Search</button>
       </form>
-      {searchFilms.length > 0 && (
-        <ul>
-          {searchFilms.map(el => {
-            return (
-              <li key={el.id}>
-                <Link to={`/movies/${el.id}`}>
-                  {el.original_title || el.name}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      {searchFilms.length > 0 && <FilmList filmArray={searchFilms} />}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { movieApi } from 'Api/movieApi';
+import FilmList from 'components/FilmList/FilmList';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [trendMovies, setTrendMovies] = useState([]);
@@ -14,17 +14,7 @@ const Home = () => {
       .then(data => setTrendMovies(data.results))
       .catch(error => console.log(error));
   }
-  return (
-    <ul>
-      {trendMovies.map(el => {
-        return (
-          <li key={el.id}>
-            <Link to={`/movies/${el.id}`}>{el.original_title || el.name}</Link>
-          </li>
-        );
-      })}
-    </ul>
-  );
+  return <FilmList filmArray={trendMovies} />;
 };
 
 export default Home;

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { movieIdApi } from 'Api/movieApi';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -8,7 +8,9 @@ import s from './movieDetails.module.css';
 const MovieDetails = () => {
   const [filmInfo, setFilmInfo] = useState({});
   const { movieId } = useParams();
+  const navigate = useNavigate();
 
+  const goBack = () => navigate(-1);
   useEffect(() => {
     async function FilmInfoRequest() {
       await movieIdApi(movieId)
@@ -35,6 +37,9 @@ const MovieDetails = () => {
   const vote = vote_average * 10;
   return (
     <>
+      <button className={s.buttonBack} onClick={goBack}>
+        Go back
+      </button>
       {filmInfo.length === 0 ? (
         <h2> We have no info about this film </h2>
       ) : (
