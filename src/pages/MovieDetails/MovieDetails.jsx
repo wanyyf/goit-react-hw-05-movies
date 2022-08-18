@@ -1,16 +1,16 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { movieIdApi } from 'Api/movieApi';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import s from './movieDetails.module.css';
+import MoreInfo from 'components/MoreInfo/MoreInfo';
 
 const MovieDetails = () => {
   const [filmInfo, setFilmInfo] = useState({});
   const { movieId } = useParams();
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  const goBack = () => navigate(-1);
   useEffect(() => {
     async function FilmInfoRequest() {
       await movieIdApi(movieId)
@@ -35,11 +35,12 @@ const MovieDetails = () => {
   const imgSrc = `https://image.tmdb.org/t/p/w500/${poster_path}`;
   const releaseYear = release_date.split('').splice(0, 4).join('');
   const vote = vote_average * 10;
+
   return (
     <>
-      <button className={s.buttonBack} onClick={goBack}>
-        Go back
-      </button>
+      <Link to={location.state ?? '/'}>
+        <button className={s.buttonBack}>Go back</button>
+      </Link>
       {filmInfo.length === 0 ? (
         <h2> We have no info about this film </h2>
       ) : (
@@ -67,14 +68,7 @@ const MovieDetails = () => {
             </div>
           </div>
           <h4>Additional information</h4>
-          <ul>
-            <li>
-              <Link to={`/movies/${movieId}/cast`}> Cast</Link>
-            </li>
-            <li>
-              <Link to={`/movies/${movieId}/reviews`}> Reviews</Link>
-            </li>
-          </ul>
+          <MoreInfo movieId={movieId} locationState={location.state} />
           <hr />
           <Outlet />
         </>
